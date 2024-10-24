@@ -16,6 +16,8 @@ from scipy import stats
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 
+from src.components.data_transformation import DataTransformation
+from src.components.data_transformation import DataTransformationConfig
 
 
 
@@ -32,6 +34,7 @@ class DataIngestionConfig:
 class DataIngestion:
     def __init__(self):
         self.ingestion_config = DataIngestionConfig()
+        
         
     def initiate_data_ingestion(self):
         logging.info("Entered the data ingestion method or component")
@@ -55,8 +58,16 @@ class DataIngestion:
             df.to_csv(self.ingestion_config.raw_data_path, index = False, header = True)
             logging.info("Raw data saved successfully")
             
+             # Convert mapping_dict to DataFrame
+            mapping_df = pd.DataFrame(list(mapping_dict.items()), columns=['Name', 'MappedName'])
+            
+            # Save the DataFrame as a CSV file
+            mapping_df.to_csv(self.ingestion_config.dict_data_path, index = False, header = True)
+            
+            logging.info(f"Mapping dictionary saved to {self.ingestion_config.dict_data_path}")
+            
             # Train-test split
-            logging.info("Train test split initiated")
+            logging.info("Train test split initiated")      
             train_set, test_set = train_test_split(df, 
                                                    stratify = df['Name'],
                                                    test_size = 0.3, 
@@ -70,7 +81,8 @@ class DataIngestion:
             return(
                 self.ingestion_config.train_data_path,
                 self.ingestion_config.test_data_path,
-                self.ingestion_config.raw_data_path
+                self.ingestion_config.raw_data_path,
+                self.ingestion_config.dict_data_path
             )
             
         except Exception as e:
@@ -79,6 +91,9 @@ class DataIngestion:
        
 if __name__ == "__main__":
     obj = DataIngestion()
-    obj.initiate_data_ingestion()
+    train_path, test_path, raw_path, dict_path = obj.initiate_data_ingestion()
+    
+    data_transformation = DataTransformation()
+    data_transformation.initiate_data_transformation(train_path, test_path, dict_path)
 
         
