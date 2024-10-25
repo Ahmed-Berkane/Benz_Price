@@ -10,6 +10,8 @@ import re
 import dill  
 import pickle
 from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+from sklearn.model_selection import GridSearchCV
 
 
 
@@ -185,3 +187,104 @@ def save_object(file_path, obj):
 
     except Exception as e:
         raise CustomException(e, sys)
+    
+
+
+def adj_r2(X, y, pred):
+    
+    '''
+    
+    This function calculates the adjusted r_2
+    
+    '''
+    try:
+        # calculate R^2
+        r2 = r2_score(y, pred)
+        
+        # Get the number of samples (n) and number of features (k)
+        n, k = X.shape[0], X.shape[1]  
+        # Calculate adjusted R-squared
+        adj_r2 = 1 - (1 - r2) * (n - 1) / (n - k - 1)
+        
+        return adj_r2
+
+    except Exception as e:
+            raise CustomException(e, sys)
+
+
+
+def evaluate_models(X_train, y_train, X_test, y_test, models, param):
+    
+    '''
+    
+    This function calculates the MAE, RMSE, and Adj_R2 for both Train and Test sets and for each model, 
+    then return the results in Pandas DataFrame
+    
+    '''
+    try:
+        data = {}
+
+        # Loop through models and their corresponding hyperparameters
+        for model_name, model in models.items():
+            # Get the hyperparameter grid for the current model
+            para = param[model_name]
+
+            # Perform GridSearchCV
+            gs = GridSearchCV(model, para, cv=3)
+            gs.fit(X_train, y_train)
+
+            # Make predictions using the best model from GridSearchCV
+            y_train_pred = gs.predict(X_train)
+            y_test_pred = gs.predict(X_test)
+            
+            
+            # Calculate the Mean Absolute Error
+            train_MAE = mean_absolute_error(y_train, y_train_pred)
+            test_MAE = mean_absolute_error(y_test, y_test_pred)
+            
+            # Calculate the Root Mean Square
+            train_RMSE = np.sqrt(mean_squared_error(y_train, y_train_pred))
+            test_RMSE = np.sqrt(mean_squared_error(y_test, y_test_pred))
+            
+            # calculate Adjusted R^2
+            train_adj_r2 = adj_r2(X_train, y_train, y_train_pred)
+            test_adj_r2 = adj_r2(X_test, y_test, y_test_pred)
+            
+            # Add the results to the report dictionary for this model
+            data[model_name] = {
+                                    'train_mae': train_MAE,
+                                    'train_rmse': train_RMSE,
+                                    'train_adj_r2': train_adj_r2,
+                                    'test_mae': test_MAE,
+                                    'test_rmse': test_RMSE,
+                                    'test_adj_r2': test_adj_r2
+                                    }
+            
+            # Now we take the dictionnary and create a nice data frame 
+            # Create a MultiIndex for columns
+            columns = pd.MultiIndex.from_tuples(
+                [('train', 'MAE'), ('train', 'RMSE'), ('train', 'Adj_R2'), 
+                ('test', 'MAE'), ('test', 'RMSE'), ('test', 'Adj_R2')],
+                names = ['set', 'metric']
+            )
+            
+            # Create a DataFrame from the data
+            report = pd.DataFrame(
+                {('train', 'MAE'): [data[model]['train_mae'] for model in data],
+                ('train', 'RMSE'): [data[model]['train_rmse'] for model in data],
+                ('train', 'Adj_R2'): [data[model]['train_adj_r2'] for model in data],
+                ('test', 'MAE'): [data[model]['test_mae'] for model in data],
+                ('test', 'RMSE'): [data[model]['test_rmse'] for model in data],
+                ('test', 'Adj_R2'): [data[model]['test_adj_r2'] for model in data]
+                },
+                index = data.keys(),
+                columns = columns
+            )
+            
+
+        return report 
+
+    
+    except Exception as e:
+            raise CustomException(e, sys)
+    
