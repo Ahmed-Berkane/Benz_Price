@@ -17,7 +17,7 @@ from sklearn.base import BaseEstimator, TransformerMixin
 
 @dataclass
 class DataTransformationConfig:
-    preprocessor_obj_file_path = os.path.join('artifacts', "proprocessor.pkl")
+    preprocessor_obj_file_path = os.path.join('artifacts', "preprocessor.pkl")
     
     
 class DataTransformation:
@@ -48,7 +48,7 @@ class DataTransformation:
             
             cat_pipeline = Pipeline(
                             steps = [
-                            ('adding_new_name', AddCatFeatures(mapping_dict = mapping_dict, add_Name = False)),
+                            ('adding_new_name', AddCatFeatures(mapping_dict = mapping_dict, add_Name = False)), # False when training model, and True when scoring
                             ('onehot', OneHotEncoder(drop='first'))      # One-hot encode with drop first column
                                       ]
                               )

@@ -82,13 +82,13 @@ class ModelTrainer:
             best_model = models[best_model_name]
             
             logging.info("Best Model Found")
+            best_model.fit(X_train, y_train)
             
             save_object(
                 file_path = self.model_trainer_config.trained_model_file_path,
                 obj = best_model
                     )
-            
-            best_model.fit(X_train, y_train)
+        
             predicted = best_model.predict(X_test)
             ADJ_R2 = adj_r2(X_test, y_test, predicted)
             

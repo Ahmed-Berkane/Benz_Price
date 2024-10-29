@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercedes-Benz Price Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            padding: 20px 0;
+        }
+        .form-container {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+        form {
+            width: 50%;
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0078d7;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005bb5;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mercedes-Benz Price Prediction</h1>
+    <div class="form-container">
+        <form action="{{ url_for('predict_datapoint') }}" method="post">
+            <label for="name">Car Model</label>
+            <select id="name" name="name">
+                <option value="2021 Mercedes-Benz A-Class A 220 4MATIC">2021 Mercedes-Benz A-Class A 220 4MATIC</option>
+                <option value="2022 Mercedes-Benz AMG SL 63 Base">2022 Mercedes-Benz AMG SL 63 Base</option>
+                <option value="2020 Mercedes-Benz AMG E 53 Base 4MATIC">2020 Mercedes-Benz AMG E 53 Base 4MATIC</option>
+                <option value="2021 Mercedes-Benz AMG GLS 63 Base 4MATIC">2021 Mercedes-Benz AMG GLS 63 Base 4MATIC</option>
+                <option value="2022 Mercedes-Benz AMG E 53 Base 4MATIC">2022 Mercedes-Benz AMG E 53 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz GLE 350 Base 4MATIC">2023 Mercedes-Benz GLE 350 Base 4MATIC</option>
+                <option value="2021 Mercedes-Benz AMG GT C">2021 Mercedes-Benz AMG GT C</option>
+                <option value="2023 Mercedes-Benz AMG CLA 45 Base 4MATIC">2023 Mercedes-Benz AMG CLA 45 Base 4MATIC</option>
+                <option value="2021 Mercedes-Benz AMG GT 53 Base">2021 Mercedes-Benz AMG GT 53 Base</option>
+                <option value="2023 Mercedes-Benz EQB 250 Base">2023 Mercedes-Benz EQB 250 Base</option>
+                <option value="2019 Mercedes-Benz CLA 250 Base 4MATIC">2019 Mercedes-Benz CLA 250 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz GLE 450 GLE 450">2023 Mercedes-Benz GLE 450 GLE 450</option>
+                <option value="2020 Mercedes-Benz SL 450 SL 450">2020 Mercedes-Benz SL 450 SL 450</option>
+                <option value="2023 Mercedes-Benz EQE 350 Base 4MATIC">2023 Mercedes-Benz EQE 350 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz GLC 300 Base 4MATIC">2023 Mercedes-Benz GLC 300 Base 4MATIC</option>
+                <option value="2021 Mercedes-Benz AMG GLC 43 4MATIC Coupe">2021 Mercedes-Benz AMG GLC 43 4MATIC Coupe</option>
+                <option value="2017 Mercedes-Benz SLC 300 Base">2017 Mercedes-Benz SLC 300 Base</option>
+                <option value="2021 Mercedes-Benz A-Class A 220">2021 Mercedes-Benz A-Class A 220</option>
+                <option value="2020 Mercedes-Benz SL 450 Base">2020 Mercedes-Benz SL 450 Base</option>
+                <option value="2020 Mercedes-Benz GLE 450 4MATIC">2020 Mercedes-Benz GLE 450 4MATIC</option>
+                <option value="2023 Mercedes-Benz EQS 450+ 450">2023 Mercedes-Benz EQS 450+ 450</option>
+                <option value="2023 Mercedes-Benz AMG CLA 45 AMG CLA 45 4MATIC">2023 Mercedes-Benz AMG CLA 45 AMG CLA 45 4MATIC</option>
+                <option value="2022 Mercedes-Benz AMG CLA 45 Base 4MATIC">2022 Mercedes-Benz AMG CLA 45 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz AMG CLA 35 Base 4MATIC">2023 Mercedes-Benz AMG CLA 35 Base 4MATIC</option>
+                <option value="2019 Mercedes-Benz CLS 450 Base">2019 Mercedes-Benz CLS 450 Base</option>
+                <option value="2024 Mercedes-Benz GLE 350 Base 4MATIC">2024 Mercedes-Benz GLE 350 Base 4MATIC</option>
+                <option value="2019 Mercedes-Benz CLS 450 Base 4MATIC">2019 Mercedes-Benz CLS 450 Base 4MATIC</option>
+                <option value="2024 Mercedes-Benz GLS 580 Base 4MATIC">2024 Mercedes-Benz GLS 580 Base 4MATIC</option>
+                <option value="2021 Mercedes-Benz AMG CLS 53 4MATIC">2021 Mercedes-Benz AMG CLS 53 4MATIC</option>
+                <option value="2023 Mercedes-Benz EQB 250 250 4D Sport Utility">2023 Mercedes-Benz EQB 250 250 4D Sport Utility</option>
+                <option value="2022 Mercedes-Benz Maybach S 580 4MATIC">2022 Mercedes-Benz Maybach S 580 4MATIC</option>
+                <option value="2023 Mercedes-Benz GLB 250 Base">2023 Mercedes-Benz GLB 250 Base</option>
+                <option value="2020 Mercedes-Benz GLS 450 Base 4MATIC">2020 Mercedes-Benz GLS 450 Base 4MATIC</option>
+                <option value="2019 Mercedes-Benz AMG E 63 S 4MATIC">2019 Mercedes-Benz AMG E 63 S 4MATIC</option>
+                <option value="2020 Mercedes-Benz GLE 580 4MATIC">2020 Mercedes-Benz GLE 580 4MATIC</option>
+                <option value="2021 Mercedes-Benz CLS 450 Base 4MATIC">2021 Mercedes-Benz CLS 450 Base 4MATIC</option>
+                <option value="2019 Mercedes-Benz AMG C 63 S">2019 Mercedes-Benz AMG C 63 S</option>
+                <option value="2022 Mercedes-Benz AMG G 63 4MATIC">2022 Mercedes-Benz AMG G 63 4MATIC</option>
+                <option value="2020 Mercedes-Benz GLE 350 Base 4MATIC">2020 Mercedes-Benz GLE 350 Base 4MATIC</option>
+                <option value="2021 Mercedes-Benz AMG GLE 53 Base">2021 Mercedes-Benz AMG GLE 53 Base</option>
+                <option value="2019 Mercedes-Benz Sprinter 3500 144 WB ROOF">2019 Mercedes-Benz Sprinter 3500 144 WB ROOF</option>
+                <option value="2019 Mercedes-Benz AMG S 63 Base 4MATIC">2019 Mercedes-Benz AMG S 63 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz GLE 450 4MATIC">2023 Mercedes-Benz GLE 450 4MATIC</option>
+                <option value="2024 Mercedes-Benz GLE 450 Plug-In Hybrid 4MATIC">2024 Mercedes-Benz GLE 450 Plug-In Hybrid 4MATIC</option>
+                <option value="2021 Mercedes-Benz GLS 450 4MATIC">2021 Mercedes-Benz GLS 450 4MATIC</option>
+                <option value="2021 Mercedes-Benz G-Class G 550 4MATIC">2021 Mercedes-Benz G-Class G 550 4MATIC</option>
+                <option value="2023 Mercedes-Benz AMG C 43 Base 4MATIC">2023 Mercedes-Benz AMG C 43 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz AMG CLA 35 4MATIC">2023 Mercedes-Benz AMG CLA 35 4MATIC</option>
+                <option value="2016 Mercedes-Benz GL-Class GL 450 4MATIC">2016 Mercedes-Benz GL-Class GL 450 4MATIC</option>
+                <option value="2023 Mercedes-Benz G-Class G 550 4MATIC">2023 Mercedes-Benz G-Class G 550 4MATIC</option>
+                <option value="2017 Mercedes-Benz AMG C 63 S">2017 Mercedes-Benz AMG C 63 S</option>
+                <option value="2023 Mercedes-Benz Metris Base">2023 Mercedes-Benz Metris Base</option>
+                <option value="2021 Mercedes-Benz AMG A 35 Base">2021 Mercedes-Benz AMG A 35 Base</option>
+                <option value="2023 Mercedes-Benz EQS 580 Base 4MATIC">2023 Mercedes-Benz EQS 580 Base 4MATIC</option>
+                <option value="2017 Mercedes-Benz SL 550 SL550">2017 Mercedes-Benz SL 550 SL550</option>
+                <option value="2021 Mercedes-Benz GLA 250 Base 4MATIC">2021 Mercedes-Benz GLA 250 Base 4MATIC</option>
+                <option value="2020 Mercedes-Benz AMG E 53 4MATIC">2020 Mercedes-Benz AMG E 53 4MATIC</option>
+                <option value="2022 Mercedes-Benz GLE 350 Base">2022 Mercedes-Benz GLE 350 Base</option>
+                <option value="2020 Mercedes-Benz AMG S 63 Base 4MATIC">2020 Mercedes-Benz AMG S 63 Base 4MATIC</option>
+                <option value="2019 Mercedes-Benz AMG GT 63 S 4-Door">2019 Mercedes-Benz AMG GT 63 S 4-Door</option>
+                <option value="2024 Mercedes-Benz GLC 300 Base">2024 Mercedes-Benz GLC 300 Base</option>
+                <option value="2019 Mercedes-Benz AMG GT 63 4-Door">2019 Mercedes-Benz AMG GT 63 4-Door</option>
+                <option value="2016 Mercedes-Benz Maybach S S 600">2016 Mercedes-Benz Maybach S S 600</option>
+                <option value="2018 Mercedes-Benz S-Class S 450">2018 Mercedes-Benz S-Class S 450</option>
+                <option value="2023 Mercedes-Benz GLA 250 Base">2023 Mercedes-Benz GLA 250 Base</option>
+                <option value="2023 Mercedes-Benz E-Class E 350 4MATIC">2023 Mercedes-Benz E-Class E 350 4MATIC</option>
+                <option value="2020 Mercedes-Benz A-Class A 220 4MATIC">2020 Mercedes-Benz A-Class A 220 4MATIC</option>
+                <option value="2020 Mercedes-Benz GLC 300 Base 4MATIC">2020 Mercedes-Benz GLC 300 Base 4MATIC</option>
+                <option value="2016 Mercedes-Benz AMG S AMG S 63 4MATIC">2016 Mercedes-Benz AMG S AMG S 63 4MATIC</option>
+                <option value="2024 Mercedes-Benz AMG GLE 63 S">2024 Mercedes-Benz AMG GLE 63 S</option>
+                <option value="2020 Mercedes-Benz G-Class G 550 4MATIC">2020 Mercedes-Benz G-Class G 550 4MATIC</option>
+                <option value="2021 Mercedes-Benz GLS 580 Base 4MATIC">2021 Mercedes-Benz GLS 580 Base 4MATIC</option>
+                <option value="2020 Mercedes-Benz AMG GT R">2020 Mercedes-Benz AMG GT R</option>
+                <option value="2023 Mercedes-Benz CLA 250 Base">2023 Mercedes-Benz CLA 250 Base</option>
+                <option value="2021 Mercedes-Benz AMG GT 63 4-Door">2021 Mercedes-Benz AMG GT 63 4-Door</option>
+                <option value="2022 Mercedes-Benz E-Class E 350">2022 Mercedes-Benz E-Class E 350</option>
+                <option value="2023 Mercedes-Benz AMG SL 43 4MATIC+">2023 Mercedes-Benz AMG SL 43 4MATIC+</option>
+                <option value="2023 Mercedes-Benz AMG GLC 43 4MATIC Coupe">2023 Mercedes-Benz AMG GLC 43 4MATIC Coupe</option>
+                <option value="2019 Mercedes-Benz AMG GLE 63 S 4MATIC Coupe">2019 Mercedes-Benz AMG GLE 63 S 4MATIC Coupe</option>
+                <option value="2020 Mercedes-Benz E-Class 4MATIC">2020 Mercedes-Benz E-Class 4MATIC</option>
+                <option value="2023 Mercedes-Benz AMG GLE 53 Base">2023 Mercedes-Benz AMG GLE 53 Base</option>
+                <option value="2023 Mercedes-Benz EQB 350 4MATIC">2023 Mercedes-Benz EQB 350 4MATIC</option>
+                <option value="2019 Mercedes-Benz AMG GLC 63 Base 4MATIC">2019 Mercedes-Benz AMG GLC 63 Base 4MATIC</option>
+                <option value="2022 Mercedes-Benz AMG C 43 Base 4MATIC">2022 Mercedes-Benz AMG C 43 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz AMG G 63 4MATIC">2023 Mercedes-Benz AMG G 63 4MATIC</option>
+                <option value="2018 Mercedes-Benz SL 450 Base">2018 Mercedes-Benz SL 450 Base</option>
+                <option value="2015 Mercedes-Benz S-Class S 550 4MATIC">2015 Mercedes-Benz S-Class S 550 4MATIC</option>
+                <option value="2019 Mercedes-Benz AMG GLE 43 Base 4MATIC">2019 Mercedes-Benz AMG GLE 43 Base 4MATIC</option>
+                <option value="2020 Mercedes-Benz Maybach S 650 Base">2020 Mercedes-Benz Maybach S 650 Base</option>
+                <option value="2022 Mercedes-Benz A-Class A 220 4MATIC">2022 Mercedes-Benz A-Class A 220 4MATIC</option>
+                <option value="2022 Mercedes-Benz AMG GT 53 Base">2022 Mercedes-Benz AMG GT 53 Base</option>
+                <option value="2024 Mercedes-Benz GLE 450 Plug-In Hybrid Base 4MATIC">2024 Mercedes-Benz GLE 450 Plug-In Hybrid Base 4MATIC</option>
+                <option value="2021 Mercedes-Benz AMG GLB 35 Base">2021 Mercedes-Benz AMG GLB 35 Base</option>
+                <option value="2016 Mercedes-Benz GLC-Class GLC 300">2016 Mercedes-Benz GLC-Class GLC 300</option>
+                <option value="2023 Mercedes-Benz Sprinter 2500 Standard Roof">2023 Mercedes-Benz Sprinter 2500 Standard Roof</option>
+                <option value="2020 Mercedes-Benz CLA 250 Base">2020 Mercedes-Benz CLA 250 Base</option>
+                <option value="2023 Mercedes-Benz AMG E 53 Base 4MATIC">2023 Mercedes-Benz AMG E 53 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz AMG E 53 4MATIC">2023 Mercedes-Benz AMG E 53 4MATIC</option>
+                <option value="2023 Mercedes-Benz EQB 350 Base 4MATIC">2023 Mercedes-Benz EQB 350 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz AMG GLE 63 S">2023 Mercedes-Benz AMG GLE 63 S</option>
+                <option value="2023 Mercedes-Benz C-Class C 300 4MATIC">2023 Mercedes-Benz C-Class C 300 4MATIC</option>
+                <option value="2023 Mercedes-Benz GLS 580 4MATIC">2023 Mercedes-Benz GLS 580 4MATIC</option>
+                <option value="2023 Mercedes-Benz CLA 250 Base 4MATIC">2023 Mercedes-Benz CLA 250 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz AMG E 53 E 53 AMG">2023 Mercedes-Benz AMG E 53 E 53 AMG</option>
+                <option value="2018 Mercedes-Benz AMG E 63 S 4MATIC">2018 Mercedes-Benz AMG E 63 S 4MATIC</option>
+                <option value="2019 Mercedes-Benz AMG E 53 Base 4MATIC">2019 Mercedes-Benz AMG E 53 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz AMG GLB 35 Base">2023 Mercedes-Benz AMG GLB 35 Base</option>
+                <option value="2023 Mercedes-Benz GLB 250 Base 4MATIC">2023 Mercedes-Benz GLB 250 Base 4MATIC</option>
+                <option value="2024 Mercedes-Benz C-Class C 300 4MATIC">2024 Mercedes-Benz C-Class C 300 4MATIC</option>
+                <option value="2021 Mercedes-Benz CLA 250 Base 4MATIC">2021 Mercedes-Benz CLA 250 Base 4MATIC</option>
+                <option value="2020 Mercedes-Benz AMG CLS 53 Base 4MATIC">2020 Mercedes-Benz AMG CLS 53 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz EQE 350+ Base">2023 Mercedes-Benz EQE 350+ Base</option>
+                <option value="2020 Mercedes-Benz AMG GLC 43 Base 4MATIC">2020 Mercedes-Benz AMG GLC 43 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz AMG GT 53 Base">2023 Mercedes-Benz AMG GT 53 Base</option>
+                <option value="2022 Mercedes-Benz EQS 580 Base 4MATIC">2022 Mercedes-Benz EQS 580 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz AMG C 63 S">2023 Mercedes-Benz AMG C 63 S</option>
+                <option value="2023 Mercedes-Benz GLS 450 4MATIC">2023 Mercedes-Benz GLS 450 4MATIC</option>
+                <option value="2019 Mercedes-Benz G-Class G 550 4MATIC">2019 Mercedes-Benz G-Class G 550 4MATIC</option>
+                <option value="2021 Mercedes-Benz AMG E 53 Base 4MATIC">2021 Mercedes-Benz AMG E 53 Base 4MATIC</option>
+                <option value="2020 Mercedes-Benz AMG E 53 ">2020 Mercedes-Benz AMG E 53 </option>
+                <option value="2021 Mercedes-Benz AMG G 63 Base">2021 Mercedes-Benz AMG G 63 Base</option>
+                <option value="2021 Mercedes-Benz AMG GLC 43 Base 4MATIC">2021 Mercedes-Benz AMG GLC 43 Base 4MATIC</option>
+                <option value="2021 Mercedes-Benz E-Class E 450 4MATIC">2021 Mercedes-Benz E-Class E 450 4MATIC</option>
+                <option value="2018 Mercedes-Benz AMG GLE 43 Coupe 4MATIC">2018 Mercedes-Benz AMG GLE 43 Coupe 4MATIC</option>
+                <option value="2023 Mercedes-Benz AMG SL 55 Base">2023 Mercedes-Benz AMG SL 55 Base</option>
+                <option value="2020 Mercedes-Benz AMG G 63 Base">2020 Mercedes-Benz AMG G 63 Base</option>
+                <option value="2019 Mercedes-Benz Maybach S 560 Base 4MATIC">2019 Mercedes-Benz Maybach S 560 Base 4MATIC</option>
+                <option value="2024 Mercedes-Benz GLC 300 Base 4MATIC">2024 Mercedes-Benz GLC 300 Base 4MATIC</option>
+                <option value="2021 Mercedes-Benz GLC 300 Base">2021 Mercedes-Benz GLC 300 Base</option>
+                <option value="2023 Mercedes-Benz GLA 250 Base 4MATIC">2023 Mercedes-Benz GLA 250 Base 4MATIC</option>
+                <option value="2022 Mercedes-Benz A-Class A 220">2022 Mercedes-Benz A-Class A 220</option>
+                <option value="2021 Mercedes-Benz GLB 250 Base">2021 Mercedes-Benz GLB 250 Base</option>
+                <option value="2024 Mercedes-Benz Maybach GLS 600 4MATIC">2024 Mercedes-Benz Maybach GLS 600 4MATIC</option>
+                <option value="2019 Mercedes-Benz AMG SLC 43 Base">2019 Mercedes-Benz AMG SLC 43 Base</option>
+                <option value="2023 Mercedes-Benz AMG E 63 S 4MATIC">2023 Mercedes-Benz AMG E 63 S 4MATIC</option>
+                <option value="2022 Mercedes-Benz AMG GLC 43 4MATIC Coupe">2022 Mercedes-Benz AMG GLC 43 4MATIC Coupe</option>
+                <option value="2022 Mercedes-Benz CLA 250 Base">2022 Mercedes-Benz CLA 250 Base</option>
+                <option value="2022 Mercedes-Benz GLB 250 Base">2022 Mercedes-Benz GLB 250 Base</option>
+                <option value="2023 Mercedes-Benz Maybach GLS 600 4MATIC">2023 Mercedes-Benz Maybach GLS 600 4MATIC</option>
+                <option value="2022 Mercedes-Benz AMG GLE 53 4MATIC">2022 Mercedes-Benz AMG GLE 53 4MATIC</option>
+                <option value="2022 Mercedes-Benz A-Class 4MATIC">2022 Mercedes-Benz A-Class 4MATIC</option>
+                <option value="2021 Mercedes-Benz AMG C 43 Base 4MATIC">2021 Mercedes-Benz AMG C 43 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz AMG GLA 45 Base">2023 Mercedes-Benz AMG GLA 45 Base</option>
+                <option value="2023 Mercedes-Benz AMG GLE 63 S-Model 4MATIC">2023 Mercedes-Benz AMG GLE 63 S-Model 4MATIC</option>
+                <option value="2021 Mercedes-Benz AMG C 63 S">2021 Mercedes-Benz AMG C 63 S</option>
+                <option value="2024 Mercedes-Benz AMG GT 43 Base">2024 Mercedes-Benz AMG GT 43 Base</option>
+                <option value="2023 Mercedes-Benz EQE 500 4MATIC">2023 Mercedes-Benz EQE 500 4MATIC</option>
+                <option value="2023 Mercedes-Benz GLB 250 ">2023 Mercedes-Benz GLB 250 </option>
+                <option value="2023 Mercedes-Benz EQE 350 4MATIC">2023 Mercedes-Benz EQE 350 4MATIC</option>
+                <option value="2023 Mercedes-Benz AMG GLS 63 4MATIC">2023 Mercedes-Benz AMG GLS 63 4MATIC</option>
+                <option value="2018 Mercedes-Benz GLA 250 Base">2018 Mercedes-Benz GLA 250 Base</option>
+                <option value="2022 Mercedes-Benz S-Class S 500 4MATIC">2022 Mercedes-Benz S-Class S 500 4MATIC</option>
+                <option value="2023 Mercedes-Benz EQS 450+ 4MATIC">2023 Mercedes-Benz EQS 450+ 4MATIC</option>
+                <option value="2022 Mercedes-Benz E-Class E 350 4MATIC">2022 Mercedes-Benz E-Class E 350 4MATIC</option>
+                <option value="2024 Mercedes-Benz AMG GLS 63 Base 4MATIC">2024 Mercedes-Benz AMG GLS 63 Base 4MATIC</option>
+                <option value="2022 Mercedes-Benz AMG SL 55 Base">2022 Mercedes-Benz AMG SL 55 Base</option>
+                <option value="2021 Mercedes-Benz GLE 350 Base">2021 Mercedes-Benz GLE 350 Base</option>
+                <option value="2019 Mercedes-Benz C-Class C 300">2019 Mercedes-Benz C-Class C 300</option>
+                <option value="2019 Mercedes-Benz AMG GT C">2019 Mercedes-Benz AMG GT C</option>
+                <option value="2023 Mercedes-Benz GLC 300 ">2023 Mercedes-Benz GLC 300 </option>
+                <option value="2017 Mercedes-Benz AMG SLC 43 Base">2017 Mercedes-Benz AMG SLC 43 Base</option>
+                <option value="2020 Mercedes-Benz GLB 250 Base">2020 Mercedes-Benz GLB 250 Base</option>
+                <option value="2022 Mercedes-Benz GLE 350 Base 4MATIC">2022 Mercedes-Benz GLE 350 Base 4MATIC</option>
+                <option value="2021 Mercedes-Benz GLE 350 Base 4MATIC">2021 Mercedes-Benz GLE 350 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz GLS 580 Base 4MATIC">2023 Mercedes-Benz GLS 580 Base 4MATIC</option>
+                <option value="2020 Mercedes-Benz C-Class C 300">2020 Mercedes-Benz C-Class C 300</option>
+                <option value="2023 Mercedes-Benz C-Class 4MATIC Coupe">2023 Mercedes-Benz C-Class 4MATIC Coupe</option>
+                <option value="2021 Mercedes-Benz AMG GT 43 Base">2021 Mercedes-Benz AMG GT 43 Base</option>
+                <option value="2018 Mercedes-Benz G-Class ">2018 Mercedes-Benz G-Class </option>
+                <option value="2021 Mercedes-Benz AMG GLE 63 Base 4MATIC">2021 Mercedes-Benz AMG GLE 63 Base 4MATIC</option>
+                <option value="2018 Mercedes-Benz AMG GT Base">2018 Mercedes-Benz AMG GT Base</option>
+                <option value="2019 Mercedes-Benz S-Class 4MATIC">2019 Mercedes-Benz S-Class 4MATIC</option>
+                <option value="2023 Mercedes-Benz S-Class 4MATIC">2023 Mercedes-Benz S-Class 4MATIC</option>
+                <option value="2021 Mercedes-Benz AMG GLA 45 Base">2021 Mercedes-Benz AMG GLA 45 Base</option>
+                <option value="2021 Mercedes-Benz AMG CLA 45 AMG CLA 45 4MATIC">2021 Mercedes-Benz AMG CLA 45 AMG CLA 45 4MATIC</option>
+                <option value="2020 Mercedes-Benz GLC 300 ">2020 Mercedes-Benz GLC 300 </option>
+                <option value="2023 Mercedes-Benz AMG GT 53 AMG GT 53">2023 Mercedes-Benz AMG GT 53 AMG GT 53</option>
+                <option value="2023 Mercedes-Benz AMG GLE 53 4MATIC">2023 Mercedes-Benz AMG GLE 53 4MATIC</option>
+                <option value="2021 Mercedes-Benz Maybach GLS 600 4MATIC">2021 Mercedes-Benz Maybach GLS 600 4MATIC</option>
+                <option value="2019 Mercedes-Benz E-Class E 300">2019 Mercedes-Benz E-Class E 300</option>
+                <option value="2024 Mercedes-Benz C-Class C 300">2024 Mercedes-Benz C-Class C 300</option>
+                <option value="2023 Mercedes-Benz E-Class E 63 AMG 4MATIC">2023 Mercedes-Benz E-Class E 63 AMG 4MATIC</option>
+                <option value="2020 Mercedes-Benz GLC 350e Base 4MATIC">2020 Mercedes-Benz GLC 350e Base 4MATIC</option>
+                <option value="2021 Mercedes-Benz AMG GT AMG GT 43">2021 Mercedes-Benz AMG GT AMG GT 43</option>
+                <option value="2018 Mercedes-Benz GLS 550 Base 4MATIC">2018 Mercedes-Benz GLS 550 Base 4MATIC</option>
+                <option value="2021 Mercedes-Benz S-Class S 580 4MATIC">2021 Mercedes-Benz S-Class S 580 4MATIC</option>
+                <option value="2023 Mercedes-Benz EQB 300 4MATIC">2023 Mercedes-Benz EQB 300 4MATIC</option>
+                <option value="2023 Mercedes-Benz GLE 350 Base">2023 Mercedes-Benz GLE 350 Base</option>
+                <option value="2020 Mercedes-Benz AMG GT 63 4-Door">2020 Mercedes-Benz AMG GT 63 4-Door</option>
+                <option value="2023 Mercedes-Benz AMG SL 63 Base">2023 Mercedes-Benz AMG SL 63 Base</option>
+                <option value="2023 Mercedes-Benz AMG GLE 53 4MATIC Coupe">2023 Mercedes-Benz AMG GLE 53 4MATIC Coupe</option>
+                <option value="2023 Mercedes-Benz GLC 300 4MATIC Coupe">2023 Mercedes-Benz GLC 300 4MATIC Coupe</option>
+                <option value="2022 Mercedes-Benz AMG E 53 4MATIC">2022 Mercedes-Benz AMG E 53 4MATIC</option>
+                <option value="2023 Mercedes-Benz EQB 300 Base 4MATIC">2023 Mercedes-Benz EQB 300 Base 4MATIC</option>
+                <option value="2021 Mercedes-Benz A-Class 4MATIC">2021 Mercedes-Benz A-Class 4MATIC</option>
+                <option value="2021 Mercedes-Benz CLA 250 Base">2021 Mercedes-Benz CLA 250 Base</option>
+                <option value="2019 Mercedes-Benz GLS 550 Base 4MATIC">2019 Mercedes-Benz GLS 550 Base 4MATIC</option>
+                <option value="2022 Mercedes-Benz GLC 300 Base 4MATIC">2022 Mercedes-Benz GLC 300 Base 4MATIC</option>
+                <option value="2021 Mercedes-Benz AMG GLE 53 4MATIC Coupe">2021 Mercedes-Benz AMG GLE 53 4MATIC Coupe</option>
+                <option value="2023 Mercedes-Benz EQE 500 Base 4MATIC">2023 Mercedes-Benz EQE 500 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz EQS 450 Base 4MATIC">2023 Mercedes-Benz EQS 450 Base 4MATIC</option>
+                <option value="2021 Mercedes-Benz GLE 350 ">2021 Mercedes-Benz GLE 350 </option>
+                <option value="2024 Mercedes-Benz GLE 450 4MATIC">2024 Mercedes-Benz GLE 450 4MATIC</option>
+                <option value="2021 Mercedes-Benz AMG GT R">2021 Mercedes-Benz AMG GT R</option>
+                <option value="2020 Mercedes-Benz GLE 350 ">2020 Mercedes-Benz GLE 350 </option>
+                <option value="2021 Mercedes-Benz GLE 580 AWD 4MATIC">2021 Mercedes-Benz GLE 580 AWD 4MATIC</option>
+                <option value="2023 Mercedes-Benz S-Class S 500 4MATIC">2023 Mercedes-Benz S-Class S 500 4MATIC</option>
+                <option value="2016 Mercedes-Benz GLC-Class GLC 300 4MATIC">2016 Mercedes-Benz GLC-Class GLC 300 4MATIC</option>
+                <option value="2020 Mercedes-Benz AMG GT Base">2020 Mercedes-Benz AMG GT Base</option>
+                <option value="2023 Mercedes-Benz EQE 350+ ">2023 Mercedes-Benz EQE 350+ </option>
+                <option value="2019 Mercedes-Benz AMG GLE 43 Coupe 4MATIC">2019 Mercedes-Benz AMG GLE 43 Coupe 4MATIC</option>
+                <option value="2023 Mercedes-Benz CLA 250 ">2023 Mercedes-Benz CLA 250 </option>
+                <option value="2021 Mercedes-Benz AMG E 63 S 4MATIC">2021 Mercedes-Benz AMG E 63 S 4MATIC</option>
+                <option value="2024 Mercedes-Benz AMG GLE 53 ">2024 Mercedes-Benz AMG GLE 53 </option>
+                <option value="2020 Mercedes-Benz AMG GLC 63 S 4MATIC">2020 Mercedes-Benz AMG GLC 63 S 4MATIC</option>
+                <option value="2019 Mercedes-Benz GLC 350e Base 4MATIC">2019 Mercedes-Benz GLC 350e Base 4MATIC</option>
+                <option value="2022 Mercedes-Benz GLS 450 4MATIC">2022 Mercedes-Benz GLS 450 4MATIC</option>
+                <option value="2020 Mercedes-Benz AMG A 35 Base">2020 Mercedes-Benz AMG A 35 Base</option>
+                <option value="2020 Mercedes-Benz AMG S 63 4MATIC">2020 Mercedes-Benz AMG S 63 4MATIC</option>
+                <option value="2022 Mercedes-Benz EQS 450+ 4MATIC">2022 Mercedes-Benz EQS 450+ 4MATIC</option>
+                <option value="2018 Mercedes-Benz AMG GLE 43 Base 4MATIC">2018 Mercedes-Benz AMG GLE 43 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz AMG GLA 35 Base">2023 Mercedes-Benz AMG GLA 35 Base</option>
+                <option value="2023 Mercedes-Benz EQE 500 ">2023 Mercedes-Benz EQE 500 </option>
+                <option value="2020 Mercedes-Benz E-Class E 450 4MATIC">2020 Mercedes-Benz E-Class E 450 4MATIC</option>
+                <option value="2016 Mercedes-Benz AMG G 4MATIC">2016 Mercedes-Benz AMG G 4MATIC</option>
+                <option value="2019 Mercedes-Benz AMG GLS 63 Base 4MATIC">2019 Mercedes-Benz AMG GLS 63 Base 4MATIC</option>
+                <option value="2020 Mercedes-Benz E-Class E 450">2020 Mercedes-Benz E-Class E 450</option>
+                <option value="2023 Mercedes-Benz Sprinter 2500 170 WB">2023 Mercedes-Benz Sprinter 2500 170 WB</option>
+                <option value="2021 Mercedes-Benz AMG GLS 63 Base">2021 Mercedes-Benz AMG GLS 63 Base</option>
+                <option value="2019 Mercedes-Benz GLE 400 Base 4MATIC">2019 Mercedes-Benz GLE 400 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz C-Class C 300">2023 Mercedes-Benz C-Class C 300</option>
+                <option value="2022 Mercedes-Benz AMG CLA 35 Base 4MATIC">2022 Mercedes-Benz AMG CLA 35 Base 4MATIC</option>
+                <option value="2020 Mercedes-Benz GLS 450 ">2020 Mercedes-Benz GLS 450 </option>
+                <option value="2022 Mercedes-Benz AMG GLE 53 ">2022 Mercedes-Benz AMG GLE 53 </option>
+                <option value="2022 Mercedes-Benz EQB 350 EQB 350">2022 Mercedes-Benz EQB 350 EQB 350</option>
+                <option value="2018 Mercedes-Benz AMG GT R">2018 Mercedes-Benz AMG GT R</option>
+                <option value="2023 Mercedes-Benz AMG GLA 35 ">2023 Mercedes-Benz AMG GLA 35 </option>
+                <option value="2021 Mercedes-Benz AMG CLA 35 Base 4MATIC">2021 Mercedes-Benz AMG CLA 35 Base 4MATIC</option>
+                <option value="2021 Mercedes-Benz AMG G 63 4MATIC">2021 Mercedes-Benz AMG G 63 4MATIC</option>
+                <option value="2021 Mercedes-Benz E-Class E 350">2021 Mercedes-Benz E-Class E 350</option>
+                <option value="2021 Mercedes-Benz AMG GLA 35 Base">2021 Mercedes-Benz AMG GLA 35 Base</option>
+                <option value="2022 Mercedes-Benz AMG GLE 53 Base">2022 Mercedes-Benz AMG GLE 53 Base</option>
+                <option value="2022 Mercedes-Benz GLE 350 ">2022 Mercedes-Benz GLE 350 </option>
+                <option value="2019 Mercedes-Benz A-Class A 220">2019 Mercedes-Benz A-Class A 220</option>
+                <option value="2020 Mercedes-Benz E-Class E 350 4MATIC">2020 Mercedes-Benz E-Class E 350 4MATIC</option>
+                <option value="2020 Mercedes-Benz GLB 250 Base 4MATIC">2020 Mercedes-Benz GLB 250 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz S-Class S 580 4MATIC">2023 Mercedes-Benz S-Class S 580 4MATIC</option>
+                <option value="2023 Mercedes-Benz AMG EQS Base">2023 Mercedes-Benz AMG EQS Base</option>
+                <option value="2022 Mercedes-Benz EQS 450+ ">2022 Mercedes-Benz EQS 450+ </option>
+                <option value="2019 Mercedes-Benz AMG GLE 43 4MATIC Coupe">2019 Mercedes-Benz AMG GLE 43 4MATIC Coupe</option>
+                <option value="2017 Mercedes-Benz AMG S 63 4MATIC">2017 Mercedes-Benz AMG S 63 4MATIC</option>
+                <option value="2022 Mercedes-Benz GLC 300 ">2022 Mercedes-Benz GLC 300 </option>
+                <option value="2021 Mercedes-Benz Maybach GLS 600 ">2021 Mercedes-Benz Maybach GLS 600 </option>
+                <option value="2019 Mercedes-Benz C-Class 4MATIC">2019 Mercedes-Benz C-Class 4MATIC</option>
+                <option value="2023 Mercedes-Benz E-Class E 450 4MATIC">2023 Mercedes-Benz E-Class E 450 4MATIC</option>
+                <option value="2015 Mercedes-Benz E-Class E 400 4MATIC">2015 Mercedes-Benz E-Class E 400 4MATIC</option>
+                <option value="2021 Mercedes-Benz E-Class E 350 4MATIC">2021 Mercedes-Benz E-Class E 350 4MATIC</option>
+                <option value="2019 Mercedes-Benz SLC 300 Base">2019 Mercedes-Benz SLC 300 Base</option>
+                <option value="2020 Mercedes-Benz C-Class C 300 4MATIC">2020 Mercedes-Benz C-Class C 300 4MATIC</option>
+                <option value="2020 Mercedes-Benz S-Class S 450">2020 Mercedes-Benz S-Class S 450</option>
+                <option value="2020 Mercedes-Benz SLC 300 Base">2020 Mercedes-Benz SLC 300 Base</option>
+                <option value="2022 Mercedes-Benz GLC 300 4MATIC Coupe">2022 Mercedes-Benz GLC 300 4MATIC Coupe</option>
+                <option value="2020 Mercedes-Benz AMG A 35 4MATIC">2020 Mercedes-Benz AMG A 35 4MATIC</option>
+                <option value="2023 Mercedes-Benz AMG E 63 ">2023 Mercedes-Benz AMG E 63 </option>
+                <option value="2017 Mercedes-Benz Metris Base">2017 Mercedes-Benz Metris Base</option>
+                <option value="2021 Mercedes-Benz GLE 450 4MATIC">2021 Mercedes-Benz GLE 450 4MATIC</option>
+                <option value="2020 Mercedes-Benz GLA 250 Base">2020 Mercedes-Benz GLA 250 Base</option>
+                <option value="2023 Mercedes-Benz EQS 450+ Base">2023 Mercedes-Benz EQS 450+ Base</option>
+                <option value="2023 Mercedes-Benz EQE 350+ 350+ SUV">2023 Mercedes-Benz EQE 350+ 350+ SUV</option>
+                <option value="2021 Mercedes-Benz GLC 300 Base 4MATIC">2021 Mercedes-Benz GLC 300 Base 4MATIC</option>
+                <option value="2020 Mercedes-Benz CLA 250 ">2020 Mercedes-Benz CLA 250 </option>
+                <option value="2020 Mercedes-Benz GLC 300 Base">2020 Mercedes-Benz GLC 300 Base</option>
+                <option value="2023 Mercedes-Benz E-Class E 350">2023 Mercedes-Benz E-Class E 350</option>
+                <option value="2021 Mercedes-Benz CLS 450 ">2021 Mercedes-Benz CLS 450 </option>
+                <option value="2020 Mercedes-Benz A-Class A 220">2020 Mercedes-Benz A-Class A 220</option>
+                <option value="2014 Mercedes-Benz SLK-Class SLK 250">2014 Mercedes-Benz SLK-Class SLK 250</option>
+                <option value="2021 Mercedes-Benz AMG GLB 35 4MATIC">2021 Mercedes-Benz AMG GLB 35 4MATIC</option>
+                <option value="2023 Mercedes-Benz AMG GLS 63 Base 4MATIC">2023 Mercedes-Benz AMG GLS 63 Base 4MATIC</option>
+                <option value="2021 Mercedes-Benz C-Class ">2021 Mercedes-Benz C-Class </option>
+                <option value="2023 Mercedes-Benz CLS 450 Base 4MATIC">2023 Mercedes-Benz CLS 450 Base 4MATIC</option>
+                <option value="2021 Mercedes-Benz C-Class C 300 4MATIC">2021 Mercedes-Benz C-Class C 300 4MATIC</option>
+                <option value="2023 Mercedes-Benz C-Class 4MATIC Sedan">2023 Mercedes-Benz C-Class 4MATIC Sedan</option>
+                <option value="2022 Mercedes-Benz C-Class 4MATIC Sedan">2022 Mercedes-Benz C-Class 4MATIC Sedan</option>
+                <option value="2021 Mercedes-Benz Sprinter 3500 144 WB">2021 Mercedes-Benz Sprinter 3500 144 WB</option>
+                <option value="2024 Mercedes-Benz GLS 580 ">2024 Mercedes-Benz GLS 580 </option>
+                <option value="2023 Mercedes-Benz EQB 250 ">2023 Mercedes-Benz EQB 250 </option>
+                <option value="2022 Mercedes-Benz C-Class C 300 4MATIC">2022 Mercedes-Benz C-Class C 300 4MATIC</option>
+                <option value="2020 Mercedes-Benz GLE 350 Base">2020 Mercedes-Benz GLE 350 Base</option>
+                <option value="2018 Mercedes-Benz AMG GLE 43 ">2018 Mercedes-Benz AMG GLE 43 </option>
+                <option value="2024 Mercedes-Benz CLA 250 Base 4MATIC">2024 Mercedes-Benz CLA 250 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz AMG GLC 43 Base 4MATIC">2023 Mercedes-Benz AMG GLC 43 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz GLE 350 4MATIC">2023 Mercedes-Benz GLE 350 4MATIC</option>
+                <option value="2022 Mercedes-Benz C-Class C 300">2022 Mercedes-Benz C-Class C 300</option>
+                <option value="2023 Mercedes-Benz AMG EQE Base">2023 Mercedes-Benz AMG EQE Base</option>
+                <option value="2021 Mercedes-Benz E-Class E 450">2021 Mercedes-Benz E-Class E 450</option>
+                <option value="2020 Mercedes-Benz GLB 250 ">2020 Mercedes-Benz GLB 250 </option>
+                <option value="2020 Mercedes-Benz AMG GT 53 Base">2020 Mercedes-Benz AMG GT 53 Base</option>
+                <option value="2023 Mercedes-Benz EQB 350 ">2023 Mercedes-Benz EQB 350 </option>
+                <option value="2018 Mercedes-Benz AMG GLE 63 ">2018 Mercedes-Benz AMG GLE 63 </option>
+                <option value="2022 Mercedes-Benz EQB 350 Base 4MATIC">2022 Mercedes-Benz EQB 350 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz GLC 300 Base">2023 Mercedes-Benz GLC 300 Base</option>
+                <option value="2016 Mercedes-Benz AMG GT AMG GT S">2016 Mercedes-Benz AMG GT AMG GT S</option>
+                <option value="2020 Mercedes-Benz S-Class S 560 4MATIC">2020 Mercedes-Benz S-Class S 560 4MATIC</option>
+                <option value="2018 Mercedes-Benz GLS 550 ">2018 Mercedes-Benz GLS 550 </option>
+                <option value="2023 Mercedes-Benz EQE 350 350+ Sedan">2023 Mercedes-Benz EQE 350 350+ Sedan</option>
+                <option value="2018 Mercedes-Benz GLC 350e Base 4MATIC">2018 Mercedes-Benz GLC 350e Base 4MATIC</option>
+                <option value="2022 Mercedes-Benz AMG EQS Base">2022 Mercedes-Benz AMG EQS Base</option>
+                <option value="2022 Mercedes-Benz AMG GLA 35 Base">2022 Mercedes-Benz AMG GLA 35 Base</option>
+                <option value="2021 Mercedes-Benz C-Class C 300">2021 Mercedes-Benz C-Class C 300</option>
+                <option value="2019 Mercedes-Benz AMG GLC 43 Base 4MATIC">2019 Mercedes-Benz AMG GLC 43 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz EQE 500 4MATIC+">2023 Mercedes-Benz EQE 500 4MATIC+</option>
+                <option value="2019 Mercedes-Benz SL 450 Base">2019 Mercedes-Benz SL 450 Base</option>
+                <option value="2022 Mercedes-Benz S-Class S 580 4MATIC">2022 Mercedes-Benz S-Class S 580 4MATIC</option>
+                <option value="2020 Mercedes-Benz S-Class S 560">2020 Mercedes-Benz S-Class S 560</option>
+                <option value="2019 Mercedes-Benz GLS 450 Base 4MATIC">2019 Mercedes-Benz GLS 450 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz GLE 350 ">2023 Mercedes-Benz GLE 350 </option>
+                <option value="2020 Mercedes-Benz C-Class 4MATIC">2020 Mercedes-Benz C-Class 4MATIC</option>
+                <option value="2024 Mercedes-Benz GLS 450 4MATIC">2024 Mercedes-Benz GLS 450 4MATIC</option>
+                <option value="2020 Mercedes-Benz GLA 250 Base 4MATIC">2020 Mercedes-Benz GLA 250 Base 4MATIC</option>
+                <option value="2021 Mercedes-Benz AMG GLE 63 S-Model 4MATIC">2021 Mercedes-Benz AMG GLE 63 S-Model 4MATIC</option>
+                <option value="2016 Mercedes-Benz GLA-Class GLA 250 4MATIC">2016 Mercedes-Benz GLA-Class GLA 250 4MATIC</option>
+                <option value="2022 Mercedes-Benz GLB 250 Base 4MATIC">2022 Mercedes-Benz GLB 250 Base 4MATIC</option>
+                <option value="2020 Mercedes-Benz GLE 450 Base">2020 Mercedes-Benz GLE 450 Base</option>
+                <option value="2020 Mercedes-Benz GLS 580 Base 4MATIC">2020 Mercedes-Benz GLS 580 Base 4MATIC</option>
+                <option value="2022 Mercedes-Benz C-Class ">2022 Mercedes-Benz C-Class </option>
+                <option value="2024 Mercedes-Benz AMG G 63 4MATIC">2024 Mercedes-Benz AMG G 63 4MATIC</option>
+                <option value="2023 Mercedes-Benz C-Class Sedan">2023 Mercedes-Benz C-Class Sedan</option>
+                <option value="2020 Mercedes-Benz Sprinter 2500 Standard Roof">2020 Mercedes-Benz Sprinter 2500 Standard Roof</option>
+                <option value="2021 Mercedes-Benz E-Class ">2021 Mercedes-Benz E-Class </option>
+                <option value="2023 Mercedes-Benz E-Class E 450">2023 Mercedes-Benz E-Class E 450</option>
+                <option value="2019 Mercedes-Benz A-Class A 220 4MATIC">2019 Mercedes-Benz A-Class A 220 4MATIC</option>
+                <option value="2022 Mercedes-Benz AMG GLC 43 Base 4MATIC">2022 Mercedes-Benz AMG GLC 43 Base 4MATIC</option>
+                <option value="2024 Mercedes-Benz S-Class S 580 4MATIC">2024 Mercedes-Benz S-Class S 580 4MATIC</option>
+                <option value="2022 Mercedes-Benz CLA 250 Base 4MATIC">2022 Mercedes-Benz CLA 250 Base 4MATIC</option>
+                <option value="2017 Mercedes-Benz GLS 450 Base 4MATIC">2017 Mercedes-Benz GLS 450 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz EQS 450 ">2023 Mercedes-Benz EQS 450 </option>
+                <option value="2020 Mercedes-Benz E-Class E 350">2020 Mercedes-Benz E-Class E 350</option>
+                <option value="2019 Mercedes-Benz AMG CLS 53 S-Model 4MATIC">2019 Mercedes-Benz AMG CLS 53 S-Model 4MATIC</option>
+                <option value="2016 Mercedes-Benz AMG GLE AMG GLE 63 S Coupe 4MATIC">2016 Mercedes-Benz AMG GLE AMG GLE 63 S Coupe 4MATIC</option>
+                <option value="2023 Mercedes-Benz Sprinter 2500 M2CV4G">2023 Mercedes-Benz Sprinter 2500 M2CV4G</option>
+                <option value="2021 Mercedes-Benz AMG GLA 35 4MATIC">2021 Mercedes-Benz AMG GLA 35 4MATIC</option>
+                <option value="2020 Mercedes-Benz AMG GT 53 ">2020 Mercedes-Benz AMG GT 53 </option>
+                <option value="2022 Mercedes-Benz GLA 250 Base 4MATIC">2022 Mercedes-Benz GLA 250 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz EQE 350 Base 4MATIC+">2023 Mercedes-Benz EQE 350 Base 4MATIC+</option>
+                <option value="2021 Mercedes-Benz GLB 250 Base 4MATIC">2021 Mercedes-Benz GLB 250 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz E-Class 4MATIC">2023 Mercedes-Benz E-Class 4MATIC</option>
+                <option value="2022 Mercedes-Benz GLE 450 4MATIC">2022 Mercedes-Benz GLE 450 4MATIC</option>
+                <option value="2023 Mercedes-Benz AMG GLS 63 Base">2023 Mercedes-Benz AMG GLS 63 Base</option>
+                <option value="2016 Mercedes-Benz S-Class S 550 4MATIC">2016 Mercedes-Benz S-Class S 550 4MATIC</option>
+                <option value="2021 Mercedes-Benz E-Class 4MATIC">2021 Mercedes-Benz E-Class 4MATIC</option>
+                <option value="2017 Mercedes-Benz AMG G 63 Base">2017 Mercedes-Benz AMG G 63 Base</option>
+                <option value="2021 Mercedes-Benz GLC 300 4MATIC Coupe">2021 Mercedes-Benz GLC 300 4MATIC Coupe</option>
+                <option value="2022 Mercedes-Benz S-Class ">2022 Mercedes-Benz S-Class </option>
+                <option value="2019 Mercedes-Benz AMG C 43 Base 4MATIC">2019 Mercedes-Benz AMG C 43 Base 4MATIC</option>
+                <option value="2022 Mercedes-Benz E-Class 4MATIC">2022 Mercedes-Benz E-Class 4MATIC</option>
+                <option value="2021 Mercedes-Benz GLB 250 ">2021 Mercedes-Benz GLB 250 </option>
+                <option value="2022 Mercedes-Benz G-Class ">2022 Mercedes-Benz G-Class </option>
+                <option value="2021 Mercedes-Benz C-Class 4MATIC Sedan">2021 Mercedes-Benz C-Class 4MATIC Sedan</option>
+                <option value="2022 Mercedes-Benz GLC 300 Base">2022 Mercedes-Benz GLC 300 Base</option>
+                <option value="2024 Mercedes-Benz GLB 250 Base">2024 Mercedes-Benz GLB 250 Base</option>
+                <option value="2019 Mercedes-Benz E-Class ">2019 Mercedes-Benz E-Class </option>
+                <option value="2023 Mercedes-Benz AMG GLA 45 AMG GLA 45">2023 Mercedes-Benz AMG GLA 45 AMG GLA 45</option>
+                <option value="2023 Mercedes-Benz EQS 580 4MATIC">2023 Mercedes-Benz EQS 580 4MATIC</option>
+                <option value="2018 Mercedes-Benz GLS 450 Base 4MATIC">2018 Mercedes-Benz GLS 450 Base 4MATIC</option>
+                <option value="2022 Mercedes-Benz AMG GLE 63 S">2022 Mercedes-Benz AMG GLE 63 S</option>
+                <option value="2022 Mercedes-Benz Metris Base">2022 Mercedes-Benz Metris Base</option>
+                <option value="2023 Mercedes-Benz GLA 250 ">2023 Mercedes-Benz GLA 250 </option>
+                <option value="2019 Mercedes-Benz C-Class C 300 4MATIC">2019 Mercedes-Benz C-Class C 300 4MATIC</option>
+                <option value="2024 Mercedes-Benz S-Class Base">2024 Mercedes-Benz S-Class Base</option>
+                <option value="2022 Mercedes-Benz GLS 580 Base 4MATIC">2022 Mercedes-Benz GLS 580 Base 4MATIC</option>
+                <option value="2021 Mercedes-Benz AMG GLE 53 4MATIC">2021 Mercedes-Benz AMG GLE 53 4MATIC</option>
+                <option value="2019 Mercedes-Benz GLA 250 Base">2019 Mercedes-Benz GLA 250 Base</option>
+                <option value="2021 Mercedes-Benz GLC 300 ">2021 Mercedes-Benz GLC 300 </option>
+                <option value="2022 Mercedes-Benz EQS 450+ Base">2022 Mercedes-Benz EQS 450+ Base</option>
+                <option value="2020 Mercedes-Benz AMG C 43 Base 4MATIC">2020 Mercedes-Benz AMG C 43 Base 4MATIC</option>
+                <option value="2015 Mercedes-Benz G-Class G 550">2015 Mercedes-Benz G-Class G 550</option>
+                <option value="2023 Mercedes-Benz GLA 250 4MATIC">2023 Mercedes-Benz GLA 250 4MATIC</option>
+                <option value="2024 Mercedes-Benz GLB 250 Base 4MATIC">2024 Mercedes-Benz GLB 250 Base 4MATIC</option>
+                <option value="2021 Mercedes-Benz GLA 250 Base">2021 Mercedes-Benz GLA 250 Base</option>
+                <option value="2024 Mercedes-Benz GLE 350 4MATIC">2024 Mercedes-Benz GLE 350 4MATIC</option>
+                <option value="2019 Mercedes-Benz CLA 250 ">2019 Mercedes-Benz CLA 250 </option>
+                <option value="2019 Mercedes-Benz C-Class ">2019 Mercedes-Benz C-Class </option>
+                <option value="2020 Mercedes-Benz CLS 450 Base">2020 Mercedes-Benz CLS 450 Base</option>
+                <option value="2024 Mercedes-Benz AMG GLE 53 Base">2024 Mercedes-Benz AMG GLE 53 Base</option>
+                <option value="2022 Mercedes-Benz AMG GT 43 C">2022 Mercedes-Benz AMG GT 43 C</option>
+                <option value="2023 Mercedes-Benz AMG GT 63 4-Door">2023 Mercedes-Benz AMG GT 63 4-Door</option>
+                <option value="2021 Mercedes-Benz AMG GT 63 ">2021 Mercedes-Benz AMG GT 63 </option>
+                <option value="2024 Mercedes-Benz GLS 450 ">2024 Mercedes-Benz GLS 450 </option>
+                <option value="2022 Mercedes-Benz GLE 450 Base 4MATIC">2022 Mercedes-Benz GLE 450 Base 4MATIC</option>
+                <option value="2019 Mercedes-Benz S-Class S 560 4MATIC">2019 Mercedes-Benz S-Class S 560 4MATIC</option>
+                <option value="2020 Mercedes-Benz S-Class S 450 4MATIC">2020 Mercedes-Benz S-Class S 450 4MATIC</option>
+                <option value="2019 Mercedes-Benz CLA 250 Base">2019 Mercedes-Benz CLA 250 Base</option>
+                <option value="2019 Mercedes-Benz GLC 300 Base 4MATIC">2019 Mercedes-Benz GLC 300 Base 4MATIC</option>
+                <option value="2022 Mercedes-Benz S-Class S 580">2022 Mercedes-Benz S-Class S 580</option>
+                <option value="2021 Mercedes-Benz GLA 250 ">2021 Mercedes-Benz GLA 250 </option>
+                <option value="2024 Mercedes-Benz GLE 450 ">2024 Mercedes-Benz GLE 450 </option>
+                <option value="2017 Mercedes-Benz AMG GLE 43 Base 4MATIC">2017 Mercedes-Benz AMG GLE 43 Base 4MATIC</option>
+                <option value="2018 Mercedes-Benz GLA 250 Base 4MATIC">2018 Mercedes-Benz GLA 250 Base 4MATIC</option>
+                <option value="2019 Mercedes-Benz GLA 250 Base 4MATIC">2019 Mercedes-Benz GLA 250 Base 4MATIC</option>
+                <option value="2020 Mercedes-Benz GLE 450 AWD 4MATIC">2020 Mercedes-Benz GLE 450 AWD 4MATIC</option>
+                <option value="2018 Mercedes-Benz AMG C 43 Base 4MATIC">2018 Mercedes-Benz AMG C 43 Base 4MATIC</option>
+                <option value="2021 Mercedes-Benz AMG CLA 35 ">2021 Mercedes-Benz AMG CLA 35 </option>
+                <option value="2022 Mercedes-Benz AMG GLA 45 Base">2022 Mercedes-Benz AMG GLA 45 Base</option>
+                <option value="2022 Mercedes-Benz S-Class S 500">2022 Mercedes-Benz S-Class S 500</option>
+                <option value="2023 Mercedes-Benz Maybach S 680 4MATIC">2023 Mercedes-Benz Maybach S 680 4MATIC</option>
+                <option value="2022 Mercedes-Benz CLS 450 Base 4MATIC">2022 Mercedes-Benz CLS 450 Base 4MATIC</option>
+                <option value="2020 Mercedes-Benz CLA 250 Base 4MATIC">2020 Mercedes-Benz CLA 250 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz AMG GT 63 S 4-Door">2023 Mercedes-Benz AMG GT 63 S 4-Door</option>
+                <option value="2020 Mercedes-Benz GLC 300 4MATIC Coupe">2020 Mercedes-Benz GLC 300 4MATIC Coupe</option>
+                <option value="2021 Mercedes-Benz CLS 450 Base">2021 Mercedes-Benz CLS 450 Base</option>
+                <option value="2019 Mercedes-Benz GLC 300 4MATIC Coupe">2019 Mercedes-Benz GLC 300 4MATIC Coupe</option>
+                <option value="2022 Mercedes-Benz GLE 580 AWD 4MATIC">2022 Mercedes-Benz GLE 580 AWD 4MATIC</option>
+                <option value="2018 Mercedes-Benz GLE 350 Base">2018 Mercedes-Benz GLE 350 Base</option>
+                <option value="2023 Mercedes-Benz GLE 580 AWD 4MATIC">2023 Mercedes-Benz GLE 580 AWD 4MATIC</option>
+                <option value="2024 Mercedes-Benz GLE 450 GLE 450">2024 Mercedes-Benz GLE 450 GLE 450</option>
+                <option value="2020 Mercedes-Benz AMG G 63 4MATIC">2020 Mercedes-Benz AMG G 63 4MATIC</option>
+                <option value="2018 Mercedes-Benz GLC 300 Base 4MATIC">2018 Mercedes-Benz GLC 300 Base 4MATIC</option>
+                <option value="2023 Mercedes-Benz EQB 300 ">2023 Mercedes-Benz EQB 300 </option>
+                <option value="2018 Mercedes-Benz CLA 250 Base 4MATIC">2018 Mercedes-Benz CLA 250 Base 4MATIC</option>
+                <option value="2024 Mercedes-Benz GLA 250 Base 4MATIC">2024 Mercedes-Benz GLA 250 Base 4MATIC</option>
+                <option value="2017 Mercedes-Benz GLA 250 Base">2017 Mercedes-Benz GLA 250 Base</option>
+                <option value="2024 Mercedes-Benz GLE 580 AWD 4MATIC">2024 Mercedes-Benz GLE 580 AWD 4MATIC</option>
+                <option value="2023 Mercedes-Benz S-Class Base">2023 Mercedes-Benz S-Class Base</option>
+                <option value="2022 Mercedes-Benz GLA 250 Base">2022 Mercedes-Benz GLA 250 Base</option>
+                <option value="2023 Mercedes-Benz AMG GLE 53 AMG GLE 53">2023 Mercedes-Benz AMG GLE 53 AMG GLE 53</option>
+                <option value="2020 Mercedes-Benz C-Class ">2020 Mercedes-Benz C-Class </option>
+                <option value="2020 Mercedes-Benz Metris Base">2020 Mercedes-Benz Metris Base</option>
+                <option value="2020 Mercedes-Benz AMG GLC 43 4MATIC">2020 Mercedes-Benz AMG GLC 43 4MATIC</option>
+                <option value="2022 Mercedes-Benz GLS 450 ">2022 Mercedes-Benz GLS 450 </option>
+                <option value="2016 Mercedes-Benz CLS-Class CLS 550">2016 Mercedes-Benz CLS-Class CLS 550</option>
+                <option value="2023 Mercedes-Benz AMG G 63 ">2023 Mercedes-Benz AMG G 63 </option>
+                <option value="2023 Mercedes-Benz EQS 450+ ">2023 Mercedes-Benz EQS 450+ </option>
+                <option value="2020 Mercedes-Benz GLE 450 ">2020 Mercedes-Benz GLE 450 </option>
+                <option value="2016 Mercedes-Benz S-Class 4MATIC">2016 Mercedes-Benz S-Class 4MATIC</option>
+                <option value="2023 Mercedes-Benz C-Class ">2023 Mercedes-Benz C-Class </option>
+                <option value="2018 Mercedes-Benz E-Class E 400">2018 Mercedes-Benz E-Class E 400</option>
+                <option value="2021 Mercedes-Benz AMG GT 63 S 4-Door">2021 Mercedes-Benz AMG GT 63 S 4-Door</option>
+                <option value="2021 Mercedes-Benz AMG GLE 63 S Coupe 4MATIC">2021 Mercedes-Benz AMG GLE 63 S Coupe 4MATIC</option>
+                <option value="2017 Mercedes-Benz E-Class E 300 Sport">2017 Mercedes-Benz E-Class E 300 Sport</option>
+                <option value="2022 Mercedes-Benz AMG GLE 63 S-model">2022 Mercedes-Benz AMG GLE 63 S-model</option>
+                <option value="2022 Mercedes-Benz S-Class 4MATIC">2022 Mercedes-Benz S-Class 4MATIC</option>
+                <option value="2021 Mercedes-Benz E-Class E 63 AMG 4MATIC">2021 Mercedes-Benz E-Class E 63 AMG 4MATIC</option>
+                <option value="2023 Mercedes-Benz CLA 250 CLA 250">2023 Mercedes-Benz CLA 250 CLA 250</option>
+                <option value="2017 Mercedes-Benz S-Class S 550">2017 Mercedes-Benz S-Class S 550</option>
+                <option value="2019 Mercedes-Benz E-Class E 450">2019 Mercedes-Benz E-Class E 450</option>
+                <option value="2024 Mercedes-Benz GLC 300 4MATIC Coupe">2024 Mercedes-Benz GLC 300 4MATIC Coupe</option>
+                <option value="2023 Mercedes-Benz AMG C 43 AMG C 43 4MATIC">2023 Mercedes-Benz AMG C 43 AMG C 43 4MATIC</option>
+                <option value="2017 Mercedes-Benz E-Class E 300 Luxury">2017 Mercedes-Benz E-Class E 300 Luxury</option>
+                <option value="2023 Mercedes-Benz EQE 350+ 350+ Sedan">2023 Mercedes-Benz EQE 350+ 350+ Sedan</option>
+                <option value="2018 Mercedes-Benz GLE 350 Base 4MATIC">2018 Mercedes-Benz GLE 350 Base 4MATIC</option>
+                <option value="2021 Mercedes-Benz AMG A 35 ">2021 Mercedes-Benz AMG A 35 </option>
+                <option value="2024 Mercedes-Benz GLE 350 ">2024 Mercedes-Benz GLE 350 </option>
+                <option value="2016 Mercedes-Benz C-Class C 300">2016 Mercedes-Benz C-Class C 300</option>
+                <option value="2022 Mercedes-Benz E-Class E 450">2022 Mercedes-Benz E-Class E 450</option>
+                <option value="2021 Mercedes-Benz E-Class E 350 Sedan">2021 Mercedes-Benz E-Class E 350 Sedan</option>
+                <option value="2023 Mercedes-Benz S-Class S 500">2023 Mercedes-Benz S-Class S 500</option>
+                <option value="2022 Mercedes-Benz E-Class E 450 4MATIC">2022 Mercedes-Benz E-Class E 450 4MATIC</option>
+                <option value="2020 Mercedes-Benz S-Class 4MATIC">2020 Mercedes-Benz S-Class 4MATIC</option>
+                <option value="2023 Mercedes-Benz AMG GLE 63 ">2023 Mercedes-Benz AMG GLE 63 </option>
+                <option value="2020 Mercedes-Benz A-Class 4MATIC">2020 Mercedes-Benz A-Class 4MATIC</option>
+                <option value="2021 Mercedes-Benz S-Class S 560 4MATIC">2021 Mercedes-Benz S-Class S 560 4MATIC</option>
+                <option value="2022 Mercedes-Benz AMG C 43 AMG C 43 4MATIC">2022 Mercedes-Benz AMG C 43 AMG C 43 4MATIC</option>
+                <option value="2023 Mercedes-Benz GLC 300 4MATIC">2023 Mercedes-Benz GLC 300 4MATIC</option>
+                <option value="2019 Mercedes-Benz AMG G 63 Base">2019 Mercedes-Benz AMG G 63 Base</option>
+                <option value="2017 Mercedes-Benz E-Class E 300">2017 Mercedes-Benz E-Class E 300</option>
+                <option value="2023 Mercedes-Benz G-Class ">2023 Mercedes-Benz G-Class </option>
+                <option value="2020 Mercedes-Benz CLS 450 Base 4MATIC">2020 Mercedes-Benz CLS 450 Base 4MATIC</option>
+                <option value="2020 Mercedes-Benz AMG GT C">2020 Mercedes-Benz AMG GT C</option>
+                <option value="2022 Mercedes-Benz GLE 450 ">2022 Mercedes-Benz GLE 450 </option>
+                <option value="2019 Mercedes-Benz S-Class S 560">2019 Mercedes-Benz S-Class S 560</option>
+                <option value="2023 Mercedes-Benz EQS 450 4MATIC">2023 Mercedes-Benz EQS 450 4MATIC</option>
+                <option value="2020 Mercedes-Benz AMG G 63 ">2020 Mercedes-Benz AMG G 63 </option>
+                <option value="2022 Mercedes-Benz EQB 300 Base 4MATIC">2022 Mercedes-Benz EQB 300 Base 4MATIC</option>
+                <option value="2021 Mercedes-Benz GLS 580 ">2021 Mercedes-Benz GLS 580 </option>
+                <option value="2020 Mercedes-Benz AMG GLC 63 Base 4MATIC">2020 Mercedes-Benz AMG GLC 63 Base 4MATIC</option>
+                <option value="2021 Mercedes-Benz AMG CLA 35 4MATIC">2021 Mercedes-Benz AMG CLA 35 4MATIC</option>
+                <option value="2023 Mercedes-Benz Sprinter 2500 144 WB Standard Roof Passenger">2023 Mercedes-Benz Sprinter 2500 144 WB Standard Roof Passenger</option>
+                <option value="2021 Mercedes-Benz A-Class ">2021 Mercedes-Benz A-Class </option>
+                <option value="2024 Mercedes-Benz AMG EQE 4MATIC">2024 Mercedes-Benz AMG EQE 4MATIC</option>
+                <option value="2023 Mercedes-Benz GLB 250 4MATIC">2023 Mercedes-Benz GLB 250 4MATIC</option>
+                <option value="2021 Mercedes-Benz C-Class Sedan">2021 Mercedes-Benz C-Class Sedan</option>
+                <option value="2018 Mercedes-Benz C-Class C 300 4MATIC">2018 Mercedes-Benz C-Class C 300 4MATIC</option>
+                <option value="2022 Mercedes-Benz AMG GT 53 C">2022 Mercedes-Benz AMG GT 53 C</option>
+                <option value="2023 Mercedes-Benz AMG GLB 35 ">2023 Mercedes-Benz AMG GLB 35 </option>
+                <option value="2018 Mercedes-Benz CLA 250 Base">2018 Mercedes-Benz CLA 250 Base</option>
+                <option value="2023 Mercedes-Benz AMG GT 43 Base">2023 Mercedes-Benz AMG GT 43 Base</option>
+            </select>
+
+            <label for="mileage">Mileage (mi)</label>
+            <input type="number" id="mileage" name="mileage" required>
+
+            <label for="rating">Rating</label>
+            <input type="number" id="rating" name="rating" step="0.1" min="0" max="5" required>
+
+            <label for="review_count">Review Count</label>
+            <input type="number" id="review_count" name="review_count" required>
+
+            <button type="submit">Predict Price</button>
+        </form>
+    </div>
+
+    <h2 style="text-align: center; padding-top: 20px;">
+        Predicted Price: ${{ results }}
+    </h2>
+</body>
+</html>

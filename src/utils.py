@@ -288,3 +288,44 @@ def evaluate_models(X_train, y_train, X_test, y_test, models, param):
     except Exception as e:
             raise CustomException(e, sys)
     
+
+
+def load_object(file_path):
+    try:
+        with open(file_path, "rb") as file_obj:
+            return pickle.load(file_obj)
+
+    except Exception as e:
+        raise CustomException(e, sys)
+    
+    
+    
+
+
+
+def app_data_prep(df, 
+              cat_feature, 
+              mapping_dict):
+    '''
+    This function clean the data for the web app:
+
+    '''
+    try:
+
+        #Step1:
+        df['Year'] = df[cat_feature].str[:4]
+        df[cat_feature] = df[cat_feature].str[5:]
+            
+        #Step2:
+        df['Year'] = pd.to_numeric(df['Year'])
+            
+        # Step3: Apply tge groupping of thin levels
+        df[cat_feature] = df[cat_feature].map(mapping_dict)
+
+        return df
+        
+    except Exception as e:
+        raise CustomException(e, sys) 
+    
+  
+        
