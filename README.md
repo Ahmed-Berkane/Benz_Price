@@ -30,7 +30,7 @@ This project aims to predict the prices of Mercedes-Benz cars in the USA based o
       - Feature importance analysis to assess the impact of attributes on car price.
 
 ### 4. Modeling
-   - Six different models were tested:
+   - Five different models were tested:
       - Linear Regression
       - Elastic net Regression
       - Random Forest
@@ -74,8 +74,5 @@ This project aims to predict the prices of Mercedes-Benz cars in the USA based o
       - Ensure all required libraries are installed as per `requirements.txt`.
       - Data files should be placed in the specified directories if not included.
 
----
-
-This structure should make your README more readable and easy to navigate, especially for someone unfamiliar with your project. Each section provides a concise summary and gives users clear instructions on setup and usage. Let me know if there’s anything else you’d like to add!
 
 
