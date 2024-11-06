@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 
 from src.exception import CustomException
+from src.logger import logging
 
 from src.utils import load_object, app_data_prep
 
@@ -16,10 +17,12 @@ class PredictPipeline:
     def predict(self, features):
         
         try:
-            model_path = 'artifacts\model.pkl'
-            preprocessor_path = 'artifacts\preprocessor.pkl'
-            dict_path = 'artifacts\mapping_dict.csv'
+            logging.info("Create artifacts paths")
+            model_path = 'artifacts/model.pkl'
+            preprocessor_path = 'artifacts/preprocessor.pkl'
+            dict_path = 'artifacts/mapping_dict.csv'
             
+            logging.info("Create artifacts objects")
             model = load_object(file_path = model_path)
             preprocessor = load_object(file_path = preprocessor_path)
             
@@ -28,14 +31,18 @@ class PredictPipeline:
             # Convert the DataFrame back into a dictionary
             mapping_dict = dict(zip(mapping_df['Name'], mapping_df['MappedName']))
             
+            logging.info("Start data cleaning")
             features = app_data_prep(df = features, 
                                     cat_feature = 'Name',
                                     mapping_dict  = mapping_dict)
             
+            logging.info("Start data processing")
             data_scaled = preprocessor.transform(features)
             
+            logging.info("Making Preds")
             preds = model.predict(data_scaled)
             
+            logging.info("Converting Log Preds to non log form")
             preds = np.exp(preds)
             
             return preds

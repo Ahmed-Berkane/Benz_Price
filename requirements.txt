@@ -4,6 +4,5 @@ seaborn
 scikit-learn
 xgboost
 dill
-pickle
 Flask
 #-e .
