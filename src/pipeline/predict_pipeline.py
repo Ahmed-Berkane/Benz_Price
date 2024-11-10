@@ -45,7 +45,7 @@ class PredictPipeline:
             logging.info("Converting Log Preds to non log form")
             preds = np.exp(preds)
             
-            return preds
+            return np.round(preds, 0)
         
 
         except Exception as e:

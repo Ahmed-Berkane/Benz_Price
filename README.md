@@ -55,21 +55,28 @@ This project aims to predict the prices of Mercedes-Benz cars in the USA based o
    - **Clone the repository**:
      ```bash
      git clone https://github.com/Ahmed-Berkane/Benz_Price.git
-     cd Benz_Price
      ```
    - **Create a virtual environment**:
      ```bash
      python3 -m venv venv
-     source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+     # On Windows:
+     .\venv\Scripts\activate 
+
+     # On macOS:  
+     source venv/bin/activate
      ```
    - **Install dependencies**:
      ```bash
+     cd Benz_Price
      pip install -r requirements.txt
      ```
    - **Run the Flask app locally**:
      ```bash
      python application.py
      ```
+   - Once the app is running, open your browser and go to http://127.0.0.1:5000/predictdata to see the app.
+
    - **Additional Notes**:
       - Ensure all required libraries are installed as per `requirements.txt`.
       - Data files should be placed in the specified directories if not included.
